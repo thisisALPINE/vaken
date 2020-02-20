@@ -20,6 +20,9 @@ module.exports = merge.smart(common, {
 			'/graphql': {
 				target: 'http://localhost:8080',
 			},
+			'/backend': {
+				target: 'http://localhost:8080',
+			},
 		},
 	},
 	module: {

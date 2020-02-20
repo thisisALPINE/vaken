@@ -14,6 +14,7 @@ import { strategies, registerAuthRoutes } from './auth';
 import { UnsubscribeHandler } from './mail/handlers';
 import { UserDbInterface } from './generated/graphql';
 import { pullCalendar } from './events';
+import Fuck from './modules/Fuck';
 
 const { SESSION_SECRET, PORT, CALENDARID, NODE_ENV } = process.env;
 if (!SESSION_SECRET) throw new Error(`SESSION_SECRET not set`);
@@ -29,7 +30,7 @@ export const schema = makeExecutableSchema({
 		requireResolversForResolveType: false,
 	},
 	resolvers: resolvers as {},
-	typeDefs: [DIRECTIVES, gqlSchema],
+	typeDefs: [DIRECTIVES, gqlSchema, new Fuck().schema],
 });
 
 (async () => {
@@ -84,6 +85,7 @@ export const schema = makeExecutableSchema({
 
 	const server = new ApolloServer({
 		context: ({ req }): Context => ({
+			db: dbClient.client,
 			models,
 			user: req.user as UserDbInterface | undefined,
 		}),
@@ -108,6 +110,9 @@ export const schema = makeExecutableSchema({
 			res.sendFile('index.html', { root: 'dist/server/app' });
 		});
 	}
+
+	// REMOVE FOR PROD. "FUCK" DEMO.
+	app.use(express.static('dist/public'));
 
 	app.listen(
 		{ port: PORT },

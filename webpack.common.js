@@ -8,6 +8,9 @@ module.exports = {
 	context: __dirname, // to automagically find tsconfig.json
 	entry: ['./src/client/index'],
 	stats: 'minimal',
+	externals: {
+		react: 'react',
+	},
 	module: {
 		rules: [
 			{

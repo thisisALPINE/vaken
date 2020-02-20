@@ -30,6 +30,7 @@ import { addOrUpdateEvent, assignEventToCompany, removeAbsentEvents } from '../e
 import { getSignedUploadUrl, getSignedReadUrl } from '../storage/gcp';
 import { sendStatusEmail } from '../mail/aws';
 import logger from '../logger';
+import Fuck from '../modules/Fuck';
 
 // added here b/c webpack JSON compilation with 'use-strict' is broken (10/31/19)
 const DEADLINE_TS = 1572497940000;
@@ -635,5 +636,12 @@ export const resolvers: CustomResolvers<Context> = {
 		},
 	},
 };
+
+// Integrate the plugin
+const myFuck = new Fuck().resolvers;
+Object.keys(myFuck).forEach(resolverKey => {
+	if (!resolvers[resolverKey]) resolvers[resolverKey] = {};
+	Object.assign(resolvers[resolverKey], myFuck[resolverKey]);
+});
 
 export default resolvers;
