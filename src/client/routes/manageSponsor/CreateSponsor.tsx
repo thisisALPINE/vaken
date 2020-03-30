@@ -158,7 +158,7 @@ const CreateSponsor: React.FunctionComponent = (): JSX.Element => {
 	const onCreateSponsorEmail = async (): Promise<void> => {
 		// validate the email entered
                 
-		if (EmailValidator.validate(sponseorEmail)) {
+		if (EmailValidator.validate(sponsorEmail)) {
 			try {
 				console.log(sponsorEmail);
 				console.log(sponsorName);
