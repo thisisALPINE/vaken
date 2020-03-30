@@ -13,8 +13,7 @@ import {
 	useTiersQuery,
 } from '../../generated/graphql';
 import Spinner from '../../components/Loading/Spinner';
-
-const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+import * as EmailValidator from 'email-validator';
 
 const StyledSelect = styled.select`
 	margin: 0.25rem 1rem 0.25rem 0rem;
@@ -158,7 +157,8 @@ const CreateSponsor: React.FunctionComponent = (): JSX.Element => {
 
 	const onCreateSponsorEmail = async (): Promise<void> => {
 		// validate the email entered
-		if (EMAIL_REGEX.test(sponsorEmail)) {
+                
+		if (EmailValidator.validate(sponseorEmail)) {
 			try {
 				console.log(sponsorEmail);
 				console.log(sponsorName);
